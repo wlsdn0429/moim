@@ -5,5 +5,9 @@ https://github.com/wlsdn0429/moim
 소모임을 위한 Web 개발 및 API 개발 (예정)
 
 java : 17
+
 spring boot : 2.7.0 // build : gradle
+
 DB : mariaDB
+
+서버 OS : centos 7 or ubuntu
