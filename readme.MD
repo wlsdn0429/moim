@@ -7,5 +7,3 @@ https://github.com/wlsdn0429/moim
 java : 17
 spring boot : 2.7.0 // build : gradle
 DB : mariaDB
-
-추후 수정 예정
