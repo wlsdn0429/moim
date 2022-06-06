@@ -7,6 +7,8 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import javax.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping(value="/member/*")
@@ -16,11 +18,20 @@ public class MemberController {
 
     @ResponseBody
     @GetMapping("/kakao")
-    public void  kakaoCallback(@RequestParam String code) {
+    public String kakaoCallback(@RequestParam String code, HttpSession session) {
 
-       //System.out.println(code);
+        //System.out.println(code);
         String access_Token = memberService.getKaKaoAccessToken(code);
         memberService.createKakaoUser(access_Token);
+
+        HashMap<String, Object> userInfo = memberService.getUserInfo(access_Token);
+        System.out.println("login Controller : " + userInfo);
+        if (userInfo.get("email") != null) {
+            session.setAttribute("userId", userInfo.get("email"));
+            session.setAttribute("access_Token", access_Token);
+        }
+        return "index";
     }
+
 
 }
