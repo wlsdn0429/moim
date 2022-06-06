@@ -1,4 +1,5 @@
 package project.moim.controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.moim.service.MemberService;
 import java.io.IOException;
@@ -19,18 +20,22 @@ public class MemberController {
     //@ResponseBody
     //@GetMapping("/kakao")
     @RequestMapping(value="/kakao")
-    public String login(@RequestParam String code, HttpSession session) {
+    public String login(@RequestParam String code, HttpSession session, Model model) {
 
         //System.out.println(code);
         String access_Token = memberService.getKaKaoAccessToken(code);
         memberService.createKakaoUser(access_Token);
 
-        HashMap<String, Object> userInfo = memberService.getUserInfo(access_Token);
+        HashMap<String, Object> userInfo = memberService.kakaogetUserInfo(access_Token);
         System.out.println("login Controller : " + userInfo);
         if (userInfo.get("email") != null) {
             session.setAttribute("userId", userInfo.get("email"));
             session.setAttribute("access_Token", access_Token);
+            //model.addAttribute("email",session.getAttribute("userId"));
+            //model.addAttribute("access_Token",session.getAttribute("access_Token"));
+            model.addAttribute("nickname", userInfo.get("nickname"));
         }
+
         return "login";
     }
     @RequestMapping(value="/logout")
@@ -46,7 +51,8 @@ public class MemberController {
             //return "redirect:/";
         }
         //return "login";
-        return "redirect:/";
+        //return "redirect:/";
+        return "redirect:/alert";
     }
 
 
