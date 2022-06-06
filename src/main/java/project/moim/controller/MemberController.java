@@ -16,9 +16,10 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
-    @ResponseBody
-    @GetMapping("/kakao")
-    public String kakaoCallback(@RequestParam String code, HttpSession session) {
+    //@ResponseBody
+    //@GetMapping("/kakao")
+    @RequestMapping(value="/kakao")
+    public String login(@RequestParam String code, HttpSession session) {
 
         //System.out.println(code);
         String access_Token = memberService.getKaKaoAccessToken(code);
@@ -30,7 +31,22 @@ public class MemberController {
             session.setAttribute("userId", userInfo.get("email"));
             session.setAttribute("access_Token", access_Token);
         }
-        return "index";
+        return "login";
+    }
+    @RequestMapping(value="/logout")
+    public String logout(HttpSession session) {
+        String access_Token = (String)session.getAttribute("access_Token");
+
+        if(access_Token != null && !"".equals(access_Token)){
+            memberService.kakaoLogout(access_Token);
+            session.removeAttribute("access_Token");
+            session.removeAttribute("userId");
+        }else{
+            System.out.println("access_Token is null");
+            //return "redirect:/";
+        }
+        //return "login";
+        return "redirect:/";
     }
 
 
