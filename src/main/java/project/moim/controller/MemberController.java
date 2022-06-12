@@ -36,7 +36,8 @@ public class MemberController {
             model.addAttribute("nickname", userInfo.get("nickname"));
         }
 
-        return "login";
+        //return "login";
+        return "login2";
     }
     @RequestMapping(value="/logout")
     public String logout(HttpSession session) {
