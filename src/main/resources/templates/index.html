@@ -1,11 +1,55 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Insert title here</title>
+    <title>Project Moim</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-  <a href="https://kauth.kakao.com/oauth/authorize?client_id=3058bf3e0aa99416851bdd732546efcd&redirect_uri=http://localhost:8080/member/kakao&response_type=code">
-    <img src="https://velog.velcdn.com/images/dlghgus5656/post/13092da5-d641-499e-88e7-35ed5228f389/%EC%B9%B4%EC%B9%B4%EC%98%A4%EB%B0%B0%EB%84%88.PNG">
-  </a>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Project Moim</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="#">모임</a></li>
+            <li><a href="#">광고</a></li>
+            <li><a href="#">마이페이지</a></li>
+            <li>
+                <a th:if="${session.access_Token == null}" href="https://kauth.kakao.com/oauth/authorize?client_id=3058bf3e0aa99416851bdd732546efcd&redirect_uri=http://localhost:8080/member/kakao&response_type=code">
+                <img src = "https://t1.daumcdn.net/cfile/tistory/996ED33E5B751C630B" style="width: 15px; min-width: 20px;"  /></a>
+            </li>
+            <li>
+                <a th:if="${session.access_Token != null}" href="/member/logout">로그아웃</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<main role="main" class="container">
+
+    <div class="starter-template">
+        <h2 th:if="${session.access_Token == null}" >
+            로그인 해주세요.
+        </h2>
+        <h2 th:if="${session.access_Token != null}">
+            로그인 완료 되었습니다.
+        </h2>
+    </div>
+
+    <ol>
+
+            <H2 th:text = "${nickname}" > 님 반갑습니다. </H2>
+
+    </ol>
+
+</main>
+
 </body>
 </html>
