@@ -1,4 +1,5 @@
 package project.moim.controller;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.moim.service.MemberService;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import project.moim.service.UserService;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,7 +18,8 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
     @Autowired
     MemberService memberService;
-
+    @Autowired
+    UserService userService;
     //@ResponseBody
     //@GetMapping("/kakao")
     @RequestMapping(value="/kakao")
@@ -27,6 +30,7 @@ public class MemberController {
         memberService.createKakaoUser(access_Token);
 
         HashMap<String, Object> userInfo = memberService.kakaogetUserInfo(access_Token);
+        userService.kakaoLogin(userInfo);
         System.out.println("login Controller : " + userInfo);
         if (userInfo.get("email") != null) {
             session.setAttribute("userId", userInfo.get("email"));
@@ -57,3 +61,4 @@ public class MemberController {
 
 
 }
+

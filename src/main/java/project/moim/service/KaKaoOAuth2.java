@@ -8,27 +8,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import project.moim.domain.User;
-import project.moim.domain.UserRole;
-import project.moim.repository.UserRepository;
 
 @Service
-public class MemberService {
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
-
-    private AuthenticationManager authenticationManager;
+public class KaKaoOAuth2 {
     public String getKaKaoAccessToken(String code) {
         String access_Token = "";
         String refresh_Token = "";
@@ -128,7 +115,7 @@ public class MemberService {
             e.printStackTrace();
         }
     }
-    public HashMap<String, Object> kakaogetUserInfo (String access_Token) {
+    public HashMap<String, Object> kakaogetUserInfo(String access_Token) {
 
         //    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
         HashMap<String, Object> userInfo = new HashMap<>();
@@ -160,13 +147,14 @@ public class MemberService {
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
-
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
             String email = kakao_account.getAsJsonObject().get("email").getAsString();
-            Long id = element.getAsJsonObject().get("id").getAsLong();
+            Long id = kakao_account.getAsJsonObject().get("id").getAsLong();
+
             userInfo.put("nickname", nickname);
             userInfo.put("email", email);
             userInfo.put("id", id);
+
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
