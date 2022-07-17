@@ -2,9 +2,12 @@ package project.moim.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import project.moim.domain.Moim;
+import project.moim.domain.MoimJoin;
 import project.moim.domain.User;
 import project.moim.service.MemberService;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,10 +66,21 @@ public class MemberController {
 
     @RequestMapping(value = "/info")
     public String memInfo(HttpSession session, Model model){
+        int i = 0;
         Long id =  (Long) session.getAttribute("Id");
         System.out.println("id : " + id);
         User userInfo = userService.getUserInfo(id);
+        ArrayList<MoimJoin> moimJoins = userService.getGroups(id);
+        ArrayList<Moim> moim = new ArrayList<Moim>();
+        for (MoimJoin moims: moimJoins
+             ) {
+            i++;
+            moim.add(userService.getGroupMoim(moims.getMoimId()));
+        }
+        if(i != 0)
+            model.addAttribute("moims", moim);
         model.addAttribute("user",userInfo);
+
         return "membinfo";
     }
 }

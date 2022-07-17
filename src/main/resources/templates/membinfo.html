@@ -67,6 +67,15 @@
           <label>생일</label>
           <span class="w3-input" th:utext="${user.birthday}"></span>
         </p>
+        <p th:if ="${moims == null}">
+          <span>가입된 모임이 없습니다 !!!</span>
+        </p>
+        <p th:if ="${moims != null}">
+          <label>가입한 모임</label>
+          <tr th:each="moim : ${moims}">
+          <span class="w3-input"th:utext="${moim.name}"></span>
+          </tr>
+        </p>
         <p class="w3-center">
           <button type="submit" class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">회원정보 변경</button>
         </p>

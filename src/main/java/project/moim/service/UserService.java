@@ -11,12 +11,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import project.moim.domain.Moim;
+import project.moim.domain.MoimJoin;
 import project.moim.domain.User;
 import project.moim.domain.UserRole;
 import project.moim.dto.KakaoUserInfo;
 import project.moim.dto.SignupRequestDto;
+import project.moim.repository.MoimJoinRepository;
+import project.moim.repository.MoimRepository;
 import project.moim.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -29,12 +34,17 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
 
+    private final MoimJoinRepository moimJoinRepository;
+    private final MoimRepository moimRepository;
+
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, KaKaoOAuth2 kakaoOAuth2, AuthenticationManager authenticationManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, KaKaoOAuth2 kakaoOAuth2, AuthenticationManager authenticationManager, MoimJoinRepository moimJoinRepository, MoimRepository moimRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.kakaoOAuth2 = kakaoOAuth2;
         this.authenticationManager = authenticationManager;
+        this.moimJoinRepository = moimJoinRepository;
+        this.moimRepository = moimRepository;
     }
 
     public void kakaoLogin(HashMap<String, Object> userInfo) {
@@ -114,5 +124,14 @@ public class UserService {
         User user = userRepository.findByKakaoId(kakaoId).orElse(null);
 
         return user;
+    }
+
+    public ArrayList<MoimJoin> getGroups(Long id){
+        ArrayList<MoimJoin> moimJoins = moimJoinRepository.findBymemberId(id);
+        return moimJoins;
+    }
+    public Moim getGroupMoim(int id){
+        Moim moim = moimRepository.findBynum(id);
+        return moim;
     }
 }
