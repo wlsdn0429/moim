@@ -164,9 +164,17 @@ public class MemberService {
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
             String email = kakao_account.getAsJsonObject().get("email").getAsString();
             Long id = element.getAsJsonObject().get("id").getAsLong();
+            String age_range = kakao_account.getAsJsonObject().get("age_range").getAsString();
+            String birthday = kakao_account.getAsJsonObject().get("birthday").getAsString();
+            String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
+            String profile_image =  properties.getAsJsonObject().get("profile_image").getAsString();
             userInfo.put("nickname", nickname);
             userInfo.put("email", email);
             userInfo.put("id", id);
+            userInfo.put("age_range", age_range);
+            userInfo.put("birthday", birthday);
+            userInfo.put("gender", gender);
+            userInfo.put("profile_image", profile_image);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

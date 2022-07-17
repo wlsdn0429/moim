@@ -1,5 +1,6 @@
 package project.moim.service;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -44,9 +45,12 @@ public class UserService {
         Long kakaoId = (Long) userInfo.get("id");
         String nickname = (String) userInfo.get("nickname");
         String email = (String) userInfo.get("email");
-
-        System.out.println(kakaoId + nickname + email  + "!!!!!");
-        System.out.println("!!!!!!!!!!!");
+        String age_range = (String) userInfo.get("age_range");
+        String birthday = (String) userInfo.get("birthday");
+        String gender = (String) userInfo.get("gender");
+        String profile_image = (String) userInfo.get("profile_image");
+//        System.out.println(kakaoId + nickname + email  + "!!!!!");
+//        System.out.println("!!!!!!!!!!!");
         // 우리 DB 에서 회원 Id 와 패스워드
         // 회원 Id = 카카오 nickname
         String username = nickname;
@@ -69,7 +73,7 @@ public class UserService {
             System.out.println("5!!!!!!!!!!!");
             //kakaoUser = new User(email, encodedPassword, nickname, role, kakaoId);
 //            kakaoUser = new User(nickname, encodedPassword, email, role, kakaoId);
-            User newUser = new User(nickname, encodedPassword, email, role, kakaoId);
+            User newUser = new User(nickname, encodedPassword, email, role, kakaoId, birthday, age_range, gender, profile_image);
             System.out.println("!!!!!!!!!!!");
             userRepository.save(newUser);
             System.out.println("!!!!!!!!!!!");
@@ -102,6 +106,12 @@ public class UserService {
 
         User user = new User(username, password, email, role);
         userRepository.save(user);
+
+        return user;
+    }
+
+    public User getUserInfo(Long kakaoId){
+        User user = userRepository.findByKakaoId(kakaoId).orElse(null);
 
         return user;
     }

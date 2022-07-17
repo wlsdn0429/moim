@@ -2,6 +2,7 @@ package project.moim.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import project.moim.domain.User;
 import project.moim.service.MemberService;
 import java.io.IOException;
 import java.util.HashMap;
@@ -35,12 +36,13 @@ public class MemberController {
         if (userInfo.get("email") != null) {
             session.setAttribute("userId", userInfo.get("email"));
             session.setAttribute("access_Token", access_Token);
+            session.setAttribute("Id",userInfo.get("id"));
             //model.addAttribute("email",session.getAttribute("userId"));
             //model.addAttribute("access_Token",session.getAttribute("access_Token"));
             model.addAttribute("nickname", userInfo.get("nickname"));
         }
 
-        return "index";
+        return "redirect:/";
     }
     @RequestMapping(value="/logout")
     public String logout(HttpSession session) {
@@ -59,6 +61,13 @@ public class MemberController {
         return "redirect:/alert";
     }
 
-
+    @RequestMapping(value = "/info")
+    public String memInfo(HttpSession session, Model model){
+        Long id =  (Long) session.getAttribute("Id");
+        System.out.println("id : " + id);
+        User userInfo = userService.getUserInfo(id);
+        model.addAttribute("user",userInfo);
+        return "membinfo";
+    }
 }
 
