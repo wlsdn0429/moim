@@ -1,25 +1,22 @@
 package project.moim.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import project.moim.domain.UserDetailsImpl;
 import project.moim.model.Message;
-
-import javax.validation.Valid;
+import project.moim.service.MoimService;
+import project.moim.service.UserService;
 
 @Controller
 public class HomeController {
-    /*
-    @RequestMapping(value="/")
-    public String index() {
-        return "index";
-    }
-    */
+    @Autowired
+    UserService userService;
+    @Autowired
+    MoimService moimService;
 
     @GetMapping("/")
     public String home(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -34,5 +31,7 @@ public class HomeController {
         model.addAttribute("data", new Message("로그아웃 완료","/"));
         //System.out.println("alert ok !!!!!!!!!!!!!!!!!!!!!");
         return "message";
-    };
+    }
+
+
 }

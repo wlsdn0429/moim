@@ -37,6 +37,15 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.9.0'
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	implementation 'javax.servlet:jstl'
+
+	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.0'
+	//게시판 썸네일
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.11'
+	//쿠팡 API
+	implementation 'commons-codec:commons-codec:1.14'
+	implementation 'org.apache.httpcomponents:httpclient:4.5.11'
+	implementation fileTree(dir: 'libs/hmac_sdk', include: '*.jar')
+
 }
 tasks.named('test') {
 	useJUnitPlatform()

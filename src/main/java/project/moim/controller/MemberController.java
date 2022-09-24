@@ -1,20 +1,20 @@
 package project.moim.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import project.moim.domain.Moim;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import project.moim.domain.MoimRoom;
 import project.moim.domain.MoimJoin;
 import project.moim.domain.User;
 import project.moim.service.MemberService;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import project.moim.service.MoimService;
 import project.moim.service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 @Controller
@@ -24,6 +24,9 @@ public class MemberController {
     MemberService memberService;
     @Autowired
     UserService userService;
+    @Autowired
+    MoimService moimService;
+
     //@ResponseBody
     //@GetMapping("/kakao")
     @RequestMapping(value="/kakao")
@@ -70,12 +73,12 @@ public class MemberController {
         Long id =  (Long) session.getAttribute("Id");
         System.out.println("id : " + id);
         User userInfo = userService.getUserInfo(id);
-        ArrayList<MoimJoin> moimJoins = userService.getGroups(id);
-        ArrayList<Moim> moim = new ArrayList<Moim>();
+        ArrayList<MoimJoin> moimJoins = moimService.getGroups(id);
+        ArrayList<MoimRoom> moim = new ArrayList<MoimRoom>();
         for (MoimJoin moims: moimJoins
              ) {
             i++;
-            moim.add(userService.getGroupMoim(moims.getMoimId()));
+            moim.add(moimService.getGroupMoim(moims.getMoimId()));
         }
         if(i != 0)
             model.addAttribute("moims", moim);

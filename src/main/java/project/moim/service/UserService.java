@@ -1,27 +1,20 @@
 package project.moim.service;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import project.moim.domain.Moim;
-import project.moim.domain.MoimJoin;
 import project.moim.domain.User;
 import project.moim.domain.UserRole;
-import project.moim.dto.KakaoUserInfo;
 import project.moim.dto.SignupRequestDto;
 import project.moim.repository.MoimJoinRepository;
 import project.moim.repository.MoimRepository;
 import project.moim.repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -124,14 +117,5 @@ public class UserService {
         User user = userRepository.findByKakaoId(kakaoId).orElse(null);
 
         return user;
-    }
-
-    public ArrayList<MoimJoin> getGroups(Long id){
-        ArrayList<MoimJoin> moimJoins = moimJoinRepository.findBymemberId(id);
-        return moimJoins;
-    }
-    public Moim getGroupMoim(int id){
-        Moim moim = moimRepository.findBynum(id);
-        return moim;
     }
 }
