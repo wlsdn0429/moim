@@ -5,15 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import project.moim.domain.MoimRoom;
-import project.moim.domain.MoimJoin;
-import project.moim.domain.User;
 import project.moim.service.MemberService;
-import project.moim.service.MoimService;
 import project.moim.service.UserService;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -24,8 +19,6 @@ public class MemberController {
     MemberService memberService;
     @Autowired
     UserService userService;
-    @Autowired
-    MoimService moimService;
 
     //@ResponseBody
     //@GetMapping("/kakao")
@@ -67,24 +60,5 @@ public class MemberController {
         return "redirect:/alert";
     }
 
-    @RequestMapping(value = "/info")
-    public String memInfo(HttpSession session, Model model){
-        int i = 0;
-        Long id =  (Long) session.getAttribute("Id");
-        System.out.println("id : " + id);
-        User userInfo = userService.getUserInfo(id);
-        ArrayList<MoimJoin> moimJoins = moimService.getGroups(id);
-        ArrayList<MoimRoom> moim = new ArrayList<MoimRoom>();
-        for (MoimJoin moims: moimJoins
-             ) {
-            i++;
-            moim.add(moimService.getGroupMoim(moims.getMoimId()));
-        }
-        if(i != 0)
-            model.addAttribute("moims", moim);
-        model.addAttribute("user",userInfo);
-
-        return "membinfo";
-    }
 }
 

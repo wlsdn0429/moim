@@ -8,16 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import project.moim.domain.UserDetailsImpl;
 import project.moim.model.Message;
-import project.moim.service.MoimService;
 import project.moim.service.UserService;
 
 @Controller
 public class HomeController {
     @Autowired
     UserService userService;
-    @Autowired
-    MoimService moimService;
-
     @GetMapping("/")
     public String home(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         if(userDetails != null){

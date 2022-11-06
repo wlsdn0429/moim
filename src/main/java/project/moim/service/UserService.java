@@ -10,34 +10,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.moim.domain.User;
 import project.moim.domain.UserRole;
-import project.moim.dto.SignupRequestDto;
-import project.moim.repository.MoimJoinRepository;
-import project.moim.repository.MoimRepository;
 import project.moim.repository.UserRepository;
 
 import java.util.HashMap;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final KaKaoOAuth2 kakaoOAuth2;
     private final AuthenticationManager authenticationManager;
     private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
 
-    private final MoimJoinRepository moimJoinRepository;
-    private final MoimRepository moimRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, KaKaoOAuth2 kakaoOAuth2, AuthenticationManager authenticationManager, MoimJoinRepository moimJoinRepository, MoimRepository moimRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,  AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.kakaoOAuth2 = kakaoOAuth2;
         this.authenticationManager = authenticationManager;
-        this.moimJoinRepository = moimJoinRepository;
-        this.moimRepository = moimRepository;
     }
 
     public void kakaoLogin(HashMap<String, Object> userInfo) {
@@ -86,31 +76,6 @@ public class UserService {
         Authentication kakaoUsernamePassword = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authentication = authenticationManager.authenticate(kakaoUsernamePassword);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
-
-    public User registerUser(SignupRequestDto requestDto) {
-        String username = requestDto.getUsername();
-        String password = requestDto.getPassword();
-        // 회원 ID 중복 확인
-        Optional<User> found = userRepository.findByUsername(username);
-        if (found.isPresent()) {
-            throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
-        }
-
-        String email = requestDto.getEmail();
-        // 사용자 ROLE 확인
-        UserRole role = UserRole.USER;
-        if (requestDto.isAdmin()) {
-            if (!requestDto.getAdminToken().equals(ADMIN_TOKEN)) {
-                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
-            }
-            role = UserRole.ADMIN;
-        }
-
-        User user = new User(username, password, email, role);
-        userRepository.save(user);
-
-        return user;
     }
 
     public User getUserInfo(Long kakaoId){
