@@ -1,7 +1,5 @@
-package project.moim.domain.posts;
+package project.moim.domain;
 
-import project.moim.domain.posts.Posts;
-import project.moim.domain.posts.PostsRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;

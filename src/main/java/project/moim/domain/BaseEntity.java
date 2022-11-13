@@ -1,4 +1,4 @@
-package project.moim.domain.posts;
+package project.moim.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

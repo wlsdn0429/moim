@@ -2,8 +2,8 @@ package project.moim.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.moim.domain.posts.Moim;
-import project.moim.domain.posts.MoimRepository;
+import project.moim.domain.Moim;
+import project.moim.domain.MoimRepository;
 
 import java.util.List;
 

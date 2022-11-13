@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import project.moim.domain.posts.Moim;
+import project.moim.domain.Moim;
 import project.moim.service.MoimService;
 
 @Controller
