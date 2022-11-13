@@ -11,8 +11,8 @@ import project.moim.domain.MoimJoin;
 import project.moim.domain.User;
 import project.moim.domain.UserDetailsImpl;
 import project.moim.model.Message;
-import project.moim.service.MoimJoinService;
-import project.moim.service.MoimService;
+import project.moim.service.MoimJoinServiceImp;
+import project.moim.service.MoimServiceImp;
 import project.moim.service.UserService;
 
 import javax.servlet.http.HttpSession;
@@ -23,9 +23,9 @@ public class HomeController {
     @Autowired
     UserService userService;
     @Autowired
-    MoimJoinService moimJoinService;
+    MoimJoinServiceImp moimJoinServiceImp;
     @Autowired
-    MoimService moimService;
+    MoimServiceImp moimServiceImp;
     @GetMapping("/")
     public String home(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         if(userDetails != null){
@@ -39,17 +39,15 @@ public class HomeController {
         int i = 0;
         System.out.println("id : " + id);
         User userInfo = userService.getUserInfo(id);
-        ArrayList<MoimJoin> moimJoins = moimJoinService.getGroups(id);
+        ArrayList<MoimJoin> moimJoins = moimJoinServiceImp.getGroups(id);
         ArrayList<Moim> moim = new ArrayList<>();
         for (MoimJoin moims: moimJoins
         ) {
             i++;
-            moim.add(moimService.getGroupMoim((long) moims.getMoimId()));
+            moim.add(moimServiceImp.getGroupMoim((long) moims.getMoimId()));
         }
         if(i != 0)
             model.addAttribute("moims", moim);
-        else
-            model.addAttribute("moims",null);
         model.addAttribute("user",userInfo);
         return "membinfo";
     }
