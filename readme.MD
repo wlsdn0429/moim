@@ -11,3 +11,5 @@ spring boot : 2.7.0 // build : gradle
 DB : mariaDB
 
 서버 OS : centos 7 or ubuntu
+
+JPA, JDBC, Spring security
