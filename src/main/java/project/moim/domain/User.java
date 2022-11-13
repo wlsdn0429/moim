@@ -64,4 +64,5 @@ public class User {
     @Column(nullable = false)
     private String profile_image;
 
+
 }
