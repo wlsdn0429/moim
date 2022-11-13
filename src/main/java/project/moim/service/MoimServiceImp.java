@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import project.moim.domain.posts.Moim;
 import project.moim.domain.posts.MoimRepository;
 
+import java.util.List;
+
 @Service
 public class MoimServiceImp implements MoimService {
     @Autowired // 1
@@ -12,16 +14,16 @@ public class MoimServiceImp implements MoimService {
 
     @Override
     public Moim createMoim(Moim moim) {
-        return moimRepository.save(moim); // 2
-    }
-
-/*    @Override
-    public void deletePerson(Long id) {
-        personRepository.delete(id); // 3
+        return moimRepository.save(moim); // C
     }
 
     @Override
-    public List<Person> getAllPersons() {
-        return personRepository.findAll(); // 4
+    public List<Moim> getAllMoims() {
+        return moimRepository.findAll(); // R
+    }
+
+    /*    @Override
+    public void deletePerson(Long id) {
+        personRepository.delete(id); // D
     }*/
 }

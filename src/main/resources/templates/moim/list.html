@@ -108,17 +108,20 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
-                <th scope="col">Personnel</th>
+                <th scope="col">Num</th>
                 <th scope="col">Region</th>
+                <th scope="col">Objectives</th>
+                <th scope="col">CreateDate</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="moim : ${employees.page.content}">
+            <tr th:each="moim : ${moimList}">
+                <td th:text="${moimStat.count}">#</td>
                 <td th:text="${moim.name}">Name</td>
-                <td th:text="${moim.position}">Position</td>
-                <td th:text="${moim.office}">Office</td>
-                <td th:text="${#dates.format(employee.startDate, 'dd.MM.yyyy')}">Start date</td>
-                <td th:text="'$' + ${#numbers.formatDecimal(employee.salary, 0, 'COMMA', 2, 'POINT')}">Salary</td>
+                <td th:text="${moim.num}">Num</td>
+                <td th:text="${moim.region}">Region</td>
+                <td th:text="${moim.objectives}">Objectives</td>
+                <td th:text="${#temporals.format(moim.created_at, 'yyyy.MM.dd')}">Created date</td>
             </tr>
             </tbody>
         </table>
