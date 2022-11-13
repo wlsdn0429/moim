@@ -8,14 +8,27 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import project.moim.domain.User;
+import project.moim.domain.UserRole;
+import project.moim.repository.UserRepository;
 
 @Service
 public class MemberService {
+    private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
+    private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
+
+    private AuthenticationManager authenticationManager;
     public String getKaKaoAccessToken(String code) {
         String access_Token = "";
         String refresh_Token = "";
@@ -147,12 +160,21 @@ public class MemberService {
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
+
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
             String email = kakao_account.getAsJsonObject().get("email").getAsString();
-
+            Long id = element.getAsJsonObject().get("id").getAsLong();
+            String age_range = kakao_account.getAsJsonObject().get("age_range").getAsString();
+            String birthday = kakao_account.getAsJsonObject().get("birthday").getAsString();
+            String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
+            String profile_image =  properties.getAsJsonObject().get("profile_image").getAsString();
             userInfo.put("nickname", nickname);
             userInfo.put("email", email);
-
+            userInfo.put("id", id);
+            userInfo.put("age_range", age_range);
+            userInfo.put("birthday", birthday);
+            userInfo.put("gender", gender);
+            userInfo.put("profile_image", profile_image);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

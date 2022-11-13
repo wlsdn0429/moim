@@ -23,18 +23,30 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'junit:junit:4.13.1'
 	implementation 'com.h2database:h2'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.4.5'
+	implementation 'org.json:json:20171018'
 	implementation 'com.google.code.gson:gson:2.9.0'
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	implementation 'javax.servlet:jstl'
-}
 
+	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.0'
+	//게시판 썸네일
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.11'
+	//쿠팡 API
+	implementation 'commons-codec:commons-codec:1.14'
+	implementation 'org.apache.httpcomponents:httpclient:4.5.11'
+	implementation fileTree(dir: 'libs/hmac_sdk', include: '*.jar')
+
+}
 tasks.named('test') {
 	useJUnitPlatform()
 }
