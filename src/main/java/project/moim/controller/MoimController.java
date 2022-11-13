@@ -23,14 +23,14 @@ public class MoimController {
     }
 
     @PostMapping("/moim")
-    public String addPageMoim(@ModelAttribute Moim moim, Model model) { // create
+    public String addPageMoim(@ModelAttribute Moim moim, Model model) { // C
         moimService.createMoim(moim);
         return "moim";
     }
 
     @RequestMapping(value = "/moim/list")
-    public String getPagePerson(Model model) {
-        // model.addAttribute("moim", moimService.getAllMoims()); // 속성이 있는 모델을 반환
+    public String getPageMoimList(Model model) {
+        model.addAttribute("moimList", moimService.getAllMoims()); // R
         return "moim/list";
     }
 
