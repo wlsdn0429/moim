@@ -46,8 +46,9 @@ public class HomeController {
             i++;
             moim.add(moimServiceImp.getGroupMoim((long) moims.getMoimId()));
         }
-        if(i != 0)
+        if(i != 0){
             model.addAttribute("moims", moim);
+        }
         model.addAttribute("user",userInfo);
         return "membinfo";
     }
